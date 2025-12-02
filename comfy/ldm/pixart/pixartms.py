@@ -1,8 +1,8 @@
 # Based on:
 # https://github.com/PixArt-alpha/PixArt-alpha [Apache 2.0 license]
 # https://github.com/PixArt-alpha/PixArt-sigma [Apache 2.0 license]
-import torch
-import torch.nn as nn
+import mindspore
+from mindspore import mint, nn
 
 from .blocks import (
     t2i_modulate,
