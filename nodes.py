@@ -540,43 +540,43 @@ class LoadLatent:
         return True
 
 
-# class CheckpointLoader:
-#     @classmethod
-#     def INPUT_TYPES(s):
-#         return {"required": { "config_name": (folder_paths.get_filename_list("configs"), ),
-#                               "ckpt_name": (folder_paths.get_filename_list("checkpoints"), )}}
-#     RETURN_TYPES = ("MODEL", "CLIP", "VAE")
-#     FUNCTION = "load_checkpoint"
+class CheckpointLoader:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": { "config_name": (folder_paths.get_filename_list("configs"), ),
+                              "ckpt_name": (folder_paths.get_filename_list("checkpoints"), )}}
+    RETURN_TYPES = ("MODEL", "CLIP", "VAE")
+    FUNCTION = "load_checkpoint"
 
-#     CATEGORY = "advanced/loaders"
-#     DEPRECATED = True
+    CATEGORY = "advanced/loaders"
+    DEPRECATED = True
 
-#     def load_checkpoint(self, config_name, ckpt_name):
-#         config_path = folder_paths.get_full_path("configs", config_name)
-#         ckpt_path = folder_paths.get_full_path_or_raise("checkpoints", ckpt_name)
-#         return comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=folder_paths.get_folder_paths("embeddings"))
+    def load_checkpoint(self, config_name, ckpt_name):
+        config_path = folder_paths.get_full_path("configs", config_name)
+        ckpt_path = folder_paths.get_full_path_or_raise("checkpoints", ckpt_name)
+        return comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=folder_paths.get_folder_paths("embeddings"))
 
-# class CheckpointLoaderSimple:
-#     @classmethod
-#     def INPUT_TYPES(s):
-#         return {
-#             "required": {
-#                 "ckpt_name": (folder_paths.get_filename_list("checkpoints"), {"tooltip": "The name of the checkpoint (model) to load."}),
-#             }
-#         }
-#     RETURN_TYPES = ("MODEL", "CLIP", "VAE")
-#     OUTPUT_TOOLTIPS = ("The model used for denoising latents.",
-#                        "The CLIP model used for encoding text prompts.",
-#                        "The VAE model used for encoding and decoding images to and from latent space.")
-#     FUNCTION = "load_checkpoint"
+class CheckpointLoaderSimple:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "ckpt_name": (folder_paths.get_filename_list("checkpoints"), {"tooltip": "The name of the checkpoint (model) to load."}),
+            }
+        }
+    RETURN_TYPES = ("MODEL", "CLIP", "VAE")
+    OUTPUT_TOOLTIPS = ("The model used for denoising latents.",
+                       "The CLIP model used for encoding text prompts.",
+                       "The VAE model used for encoding and decoding images to and from latent space.")
+    FUNCTION = "load_checkpoint"
 
-#     CATEGORY = "loaders"
-#     DESCRIPTION = "Loads a diffusion model checkpoint, diffusion models are used to denoise latents."
+    CATEGORY = "loaders"
+    DESCRIPTION = "Loads a diffusion model checkpoint, diffusion models are used to denoise latents."
 
-#     def load_checkpoint(self, ckpt_name):
-#         ckpt_path = folder_paths.get_full_path_or_raise("checkpoints", ckpt_name)
-#         out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, embedding_directory=folder_paths.get_folder_paths("embeddings"))
-#         return out[:3]
+    def load_checkpoint(self, ckpt_name):
+        ckpt_path = folder_paths.get_full_path_or_raise("checkpoints", ckpt_name)
+        out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, embedding_directory=folder_paths.get_folder_paths("embeddings"))
+        return out[:3]
 
 # class DiffusersLoader:
 #     @classmethod
@@ -1941,7 +1941,7 @@ class LoadImage:
 
 NODE_CLASS_MAPPINGS = {
     "KSampler": KSampler,
-    # "CheckpointLoaderSimple": CheckpointLoaderSimple,
+    "CheckpointLoaderSimple": CheckpointLoaderSimple,
     "CLIPTextEncode": CLIPTextEncode,
     # "CLIPSetLastLayer": CLIPSetLastLayer,
     "VAEDecode": VAEDecode,
@@ -1998,7 +1998,7 @@ NODE_CLASS_MAPPINGS = {
     # "GLIGENTextBoxApply": GLIGENTextBoxApply,
     # "InpaintModelConditioning": InpaintModelConditioning,
 
-    # "CheckpointLoader": CheckpointLoader,
+    "CheckpointLoader": CheckpointLoader,
     # "DiffusersLoader": DiffusersLoader,
 
     # "LoadLatent": LoadLatent,
